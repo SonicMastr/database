@@ -17,9 +17,29 @@ jobs:
         run: |
           cd scripts
           python3 amalgamate.py
+      - name: Upload db Artifact
+        if: ${{ !contains( github.event_name, 'pull_request' ) }}
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          # Artifact name
+          name: db
+          path: out/db.json
+                out/db_minify.json
+  release:
+    needs: [generate]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v3
       
+      - uses: actions/download-artifact@v3
+        with:
+          name: db
+          
+      - name: List directory
+        run: ls -R
+        
       - name: Remove Old
-        if: github.ref == 'refs/heads/master'
         uses: dev-drprasad/delete-older-releases@v0.2.0
         with:
           keep_latest: 0
@@ -27,7 +47,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release
-        if: github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: latest 
@@ -36,3 +55,4 @@ jobs:
           files: |
             out/db.json
             out/db_minify.json
+    
