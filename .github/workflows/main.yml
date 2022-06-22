@@ -35,6 +35,8 @@ jobs:
         run: |
           cd scripts
           python3 amalgamate.py
+          cd ..
+          ls out
           
       - name: Upload db.json
         if: ${{ !contains( github.event_name, 'pull_request' ) }}
