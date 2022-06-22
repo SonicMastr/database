@@ -33,6 +33,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: amalgamate
         run: |
+          cd scripts
           python3 amalgamate.py
           
       - name: Upload db.json
