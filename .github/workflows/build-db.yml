@@ -1,18 +1,17 @@
-name: Generate
+name: Build DB
 on:
   push:
   pull_request:
   workflow_dispatch:
 jobs:
-  generate:
+  Generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Validate
         run: |
           cd scripts
-          python3 validate.py
-          
+          python3 validate.py  
       - name: Amalgamate
         run: |
           cd scripts
@@ -20,23 +19,18 @@ jobs:
       - name: Upload db Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
-          # Artifact name
           name: db
           path: |
             out/db.json
             out/db_minify.json
-  release:
-    needs: [generate]
+  Release:
+    needs: [Generate]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:     
       - uses: actions/download-artifact@v3
         with:
-          name: db
-          
-      - name: List directory
-        run: ls -R
-        
+          name: db       
       - name: Remove Old
         uses: dev-drprasad/delete-older-releases@v0.2.0
         with:
