@@ -19,11 +19,11 @@ jobs:
           python3 amalgamate.py
       
       - name: Remove Old
-        if: ${{ !startsWith(github.event_name, 'pull_request') }}
-        uses: andreaswilli/delete-release-assets-action@v2.0.0
+        uses: dev-drprasad/delete-older-releases@v0.2.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: latest
+          keep_latest: 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release
         if: ${{ !startsWith(github.event_name, 'pull_request') }}
         uses: softprops/action-gh-release@v1
