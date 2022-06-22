@@ -18,7 +18,6 @@ jobs:
           cd scripts
           python3 amalgamate.py
       - name: Upload db Artifact
-        if: ${{ !contains( github.event_name, 'pull_request' ) }}
         uses: actions/upload-artifact@v3.1.0
         with:
           # Artifact name
@@ -30,9 +29,7 @@ jobs:
     needs: [generate]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
-    steps:
-      - uses: actions/checkout@v3
-      
+    steps:     
       - uses: actions/download-artifact@v3
         with:
           name: db
@@ -54,6 +51,6 @@ jobs:
           body: ${{ github.event.head_commit.message }}
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            out/db.json
-            out/db_minify.json
+            db.json
+            db_minify.json
     
