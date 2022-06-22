@@ -8,17 +8,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: validate
+      - name: Validate
         run: |
           cd scripts
           python3 validate.py
           
-      - name: amalgamate
+      - name: Amalgamate
         run: |
           cd scripts
           python3 amalgamate.py
       
+      - name: Remove Old
+        if: ${{ !startsWith(github.event_name, 'pull_request') }}
+        uses: andreaswilli/delete-release-assets-action@v2.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: latest
       - name: Release
+        if: ${{ !startsWith(github.event_name, 'pull_request') }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: latest 
