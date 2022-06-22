@@ -15,7 +15,7 @@
         "https:\/\/github.com\/theheroGAC\/Auto-Backup-License\/releases\/download\/1.20\/Auto.Backup.License.vpk",
         "https:\/\/gitlab.com\/SilicaAndPina\/cbpsdb\/-\/raw\/master\/vpk\/BACKUP000.vpk"
     ],
-    "repos": [ 
+    "repos": [
         "https:\/\/github.com\/theheroGAC\/Auto-Backup-License.git"
     ],
     "type": "app",
