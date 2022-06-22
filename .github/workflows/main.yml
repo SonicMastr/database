@@ -23,8 +23,9 @@ jobs:
         with:
           # Artifact name
           name: db
-          path: out/db.json
-                out/db_minify.json
+          path: |
+            out/db.json
+            out/db_minify.json
   release:
     needs: [generate]
     runs-on: ubuntu-latest
