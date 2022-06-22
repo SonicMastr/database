@@ -19,6 +19,7 @@ jobs:
           python3 amalgamate.py
       
       - name: Remove Old
+        if: ${{ !startsWith(github.event_name, 'pull_request') }}
         uses: dev-drprasad/delete-older-releases@v0.2.0
         with:
           keep_latest: 0
